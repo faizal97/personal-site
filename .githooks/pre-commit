@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+echo "Running pre-commit checks..."
+
+echo "→ Biome (lint + format)"
+pnpm biome ci .
+
+echo "→ Type check"
+pnpm astro check
+
+echo "→ Build"
+pnpm build
+
+echo "All checks passed."

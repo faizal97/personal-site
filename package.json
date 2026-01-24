@@ -11,7 +11,8 @@
     "lint": "biome check",
     "lint:fix": "biome check --fix",
     "format:check": "biome format",
-    "format": "biome format --fix"
+    "format": "biome format --fix",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
