@@ -9,7 +9,7 @@ Personal portfolio website built with Astro, Tailwind CSS v4, and MDX content co
 
 **Live Site**: [https://personal-site.fayz.workers.dev](https://personal-site.fayz.workers.dev)
 
-![Screenshot](public/screenshot.png)
+![Screenshot](.github/screenshot.png)
 
 ## Tech Stack
 
