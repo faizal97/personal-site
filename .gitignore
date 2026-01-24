@@ -20,5 +20,8 @@ Thumbs.db
 # logs
 *.log
 
+# next.js (legacy)
+.next/
+
 # misc
 *.tsbuildinfo
