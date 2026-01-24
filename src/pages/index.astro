@@ -1,11 +1,20 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import About from '@components/sections/About.astro';
+import Skills from '@components/sections/Skills.astro';
+import Experience from '@components/sections/Experience.astro';
+import FeaturedProjects from '@components/sections/FeaturedProjects.astro';
+import RecentPosts from '@components/sections/RecentPosts.astro';
+import Contact from '@components/sections/Contact.astro';
 ---
 
 <BaseLayout>
-  <section class="min-h-screen flex items-center justify-center pt-16">
-    <h1 class="text-4xl font-bold" style="font-family: var(--font-display);">
-      Portfolio <span class="text-[var(--color-accent)]">Coming Soon</span>
-    </h1>
-  </section>
+  <Hero />
+  <About />
+  <Skills />
+  <Experience />
+  <FeaturedProjects />
+  <RecentPosts />
+  <Contact />
 </BaseLayout>

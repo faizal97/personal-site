@@ -1,0 +1,61 @@
+---
+const stats = [
+  { value: '5+', label: 'Years Experience' },
+  { value: '50+', label: 'APIs Built' },
+  { value: '15+', label: 'Projects Delivered' },
+];
+---
+
+<section id="about" class="section-padding">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid lg:grid-cols-[1fr_auto] gap-12 items-start">
+      <!-- Text -->
+      <div class="space-y-6">
+        <h2
+          class="reveal text-3xl md:text-4xl font-700"
+          style="font-family: var(--font-display);"
+        >
+          About<span class="text-[var(--color-accent)]">.</span>
+        </h2>
+        <p
+          class="reveal reveal-delay-1 text-lg text-[var(--muted)] leading-relaxed max-w-2xl"
+          style="font-family: var(--font-body);"
+        >
+          I'm a backend developer based in Indonesia, focused on building reliable
+          and performant server-side applications. My experience spans enterprise
+          travel platforms, national government systems, and fintech infrastructure
+          — always with an emphasis on clean API design, data integrity, and
+          maintainable code.
+        </p>
+        <p
+          class="reveal reveal-delay-2 text-lg text-[var(--muted)] leading-relaxed max-w-2xl"
+          style="font-family: var(--font-body);"
+        >
+          I believe in writing code that's easy to reason about, test, and extend.
+          When I'm not coding, I enjoy mentoring junior developers and exploring
+          new approaches to system design.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="reveal reveal-delay-3 flex lg:flex-col gap-8 lg:gap-6">
+        {stats.map((stat) => (
+          <div class="text-center lg:text-right">
+            <div
+              class="text-3xl md:text-4xl font-800 text-[var(--color-accent)]"
+              style="font-family: var(--font-display);"
+            >
+              {stat.value}
+            </div>
+            <div
+              class="text-xs text-[var(--muted)] uppercase tracking-widest mt-1"
+              style="font-family: var(--font-mono);"
+            >
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

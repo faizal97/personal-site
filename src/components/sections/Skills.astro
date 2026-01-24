@@ -1,0 +1,43 @@
+---
+const skills = [
+  'PHP',
+  'Laravel',
+  'REST APIs',
+  'MySQL',
+  'Database Design',
+  'Git',
+  'Composer',
+  'Artisan',
+  'Postman',
+  'DevOps',
+  'Third-party APIs',
+  'Payment Systems',
+  'Data Migration',
+  'Team Leadership',
+  'Mentoring',
+  'Problem Solving',
+];
+---
+
+<section id="skills" class="section-padding relative">
+  <div class="absolute inset-0 pointer-events-none" style="background: var(--surface-2); opacity: 0.3;"></div>
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <h2
+      class="reveal text-3xl md:text-4xl font-700 mb-12"
+      style="font-family: var(--font-display);"
+    >
+      Skills<span class="text-[var(--color-accent)]">.</span>
+    </h2>
+
+    <div class="reveal reveal-delay-1 flex flex-wrap gap-3">
+      {skills.map((skill, i) => (
+        <span
+          class={`inline-block px-4 py-2 text-sm font-medium rounded-lg border border-[var(--border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200 cursor-default reveal-delay-${Math.min(i % 5 + 1, 5)}`}
+          style="font-family: var(--font-body);"
+        >
+          {skill}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

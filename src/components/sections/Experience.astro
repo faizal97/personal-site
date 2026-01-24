@@ -1,0 +1,88 @@
+---
+const experiences = [
+  {
+    title: 'Backend Developer',
+    company: 'TruTrip',
+    period: 'January 2020 — Present',
+    description:
+      'Developed and maintained REST API applications supporting core business operations for travel services. Built COVID-19 case tracking system (CEC) for global pandemic data monitoring.',
+    technologies: ['PHP', 'Laravel', 'REST APIs', 'MySQL', 'Third-party APIs'],
+  },
+  {
+    title: 'PHP Programmer',
+    company: 'Docotel Group',
+    period: 'November 2018 — December 2019',
+    description:
+      'Developed web applications following project specifications and architectural designs. Focused on government sector applications for Ministry of Law and Human Rights.',
+    technologies: ['PHP', 'Web Development', 'DevOps', 'Database Design'],
+  },
+  {
+    title: 'Assistant Lecturer',
+    company: 'Bina Sarana Informatika (BSI)',
+    period: 'September 2017 — October 2018',
+    description:
+      'Assisted with course instruction and practical laboratory sessions. Mentored students through hands-on learning exercises and technical coursework.',
+    technologies: ['Teaching', 'Mentoring', 'Programming Education', 'Technical Training'],
+  },
+];
+---
+
+<section id="experience" class="section-padding">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2
+      class="reveal text-3xl md:text-4xl font-700 mb-12"
+      style="font-family: var(--font-display);"
+    >
+      Experience<span class="text-[var(--color-accent)]">.</span>
+    </h2>
+
+    <div class="max-w-3xl space-y-6">
+      {experiences.map((exp, index) => (
+        <div
+          class={`reveal reveal-delay-${index + 1} card-base rounded-lg p-6 md:p-8`}
+        >
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+            <div>
+              <h3
+                class="text-xl font-700"
+                style="font-family: var(--font-display);"
+              >
+                {exp.title}
+              </h3>
+              <p
+                class="text-sm text-[var(--color-accent)]"
+                style="font-family: var(--font-mono);"
+              >
+                {exp.company}
+              </p>
+            </div>
+            <span
+              class="text-xs text-[var(--muted)] whitespace-nowrap"
+              style="font-family: var(--font-mono);"
+            >
+              {exp.period}
+            </span>
+          </div>
+
+          <p
+            class="text-[var(--muted)] mb-4 leading-relaxed"
+            style="font-family: var(--font-body);"
+          >
+            {exp.description}
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            {exp.technologies.map((tech) => (
+              <span
+                class="text-xs px-2 py-1 rounded border border-[var(--border)] text-[var(--muted)]"
+                style="font-family: var(--font-mono);"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
