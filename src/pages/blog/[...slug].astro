@@ -40,23 +40,27 @@ function formatDate(date: Date): string {
     />
   </Fragment>
 
+  <!-- Reading progress bar -->
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-[3px] bg-[var(--color-accent)] z-[60] transition-[width] duration-100"
+    style="width: 0%;"
+  ></div>
+
   <article class="pt-32 pb-20">
     <div class="max-w-3xl mx-auto px-6">
       <!-- Back link -->
       <a
         href="/blog"
-        class="reveal inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200 mb-8"
-        style="font-family: var(--font-mono);"
+        class="reveal-up inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200 mb-8"
       >
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back to blog
+        ← Back to blog
       </a>
 
       <!-- Header -->
-      <header class="reveal reveal-delay-1 mb-12">
+      <header class="reveal-up reveal-delay-1 mb-12">
         <time
-          class="text-xs text-[var(--muted)]"
-          style="font-family: var(--font-mono);"
+          class="font-mono text-xs text-[var(--muted)]"
           datetime={post.data.pubDate.toISOString()}
         >
           {formatDate(post.data.pubDate)}
@@ -64,25 +68,16 @@ function formatDate(date: Date): string {
             <span> · Updated {formatDate(post.data.updatedDate)}</span>
           )}
         </time>
-        <h1
-          class="text-3xl md:text-4xl lg:text-5xl font-700 mt-3 text-balance"
-          style="font-family: var(--font-display); letter-spacing: -0.02em;"
-        >
+        <h1 class="heading-xl mt-4 text-balance">
           {post.data.title}
         </h1>
-        <p
-          class="text-lg text-[var(--muted)] mt-4"
-          style="font-family: var(--font-body);"
-        >
+        <p class="text-lg text-[var(--muted)] mt-4">
           {post.data.description}
         </p>
         {post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2 mt-4">
             {post.data.tags.map((tag) => (
-              <span
-                class="text-xs px-2 py-0.5 rounded border border-[var(--border)] text-[var(--muted)]"
-                style="font-family: var(--font-mono);"
-              >
+              <span class="text-xs px-2 py-0.5 border border-[var(--border)] text-[var(--muted)] font-mono">
                 {tag}
               </span>
             ))}
@@ -91,9 +86,29 @@ function formatDate(date: Date): string {
       </header>
 
       <!-- Content -->
-      <div class="reveal reveal-delay-2 prose">
+      <div class="reveal-up reveal-delay-2 prose">
         <Content />
       </div>
     </div>
   </article>
 </BaseLayout>
+
+<script>
+  function initProgressBar() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  initProgressBar();
+  document.addEventListener('astro:after-swap', initProgressBar);
+</script>

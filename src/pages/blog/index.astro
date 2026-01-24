@@ -6,6 +6,8 @@ const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
+const [featured, ...rest] = posts;
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -20,65 +22,100 @@ function formatDate(date: Date): string {
   description="Thoughts on backend development, API design, and software engineering."
 >
   <section class="pt-32 pb-20">
-    <div class="max-w-3xl mx-auto px-6">
-      <h1
-        class="reveal text-4xl md:text-5xl font-700 mb-4"
-        style="font-family: var(--font-display);"
-      >
-        Blog<span class="text-[var(--color-accent)]">.</span>
-      </h1>
-      <p
-        class="reveal reveal-delay-1 text-[var(--muted)] mb-12"
-        style="font-family: var(--font-body);"
-      >
-        Thoughts on backend development, API design, and tooling.
-      </p>
-
-      <div class="space-y-8">
-        {posts.map((post, index) => (
-          <article class={`reveal reveal-delay-${Math.min(index + 1, 5)}`}>
-            <a
-              href={`/blog/${post.id}`}
-              class="group block"
-            >
-              <time
-                class="text-xs text-[var(--muted)]"
-                style="font-family: var(--font-mono);"
-                datetime={post.data.pubDate.toISOString()}
-              >
-                {formatDate(post.data.pubDate)}
-              </time>
-              <h2
-                class="text-xl md:text-2xl font-700 mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200"
-                style="font-family: var(--font-display);"
-              >
-                {post.data.title}
-              </h2>
-              <p
-                class="text-[var(--muted)] mt-2 leading-relaxed"
-                style="font-family: var(--font-body);"
-              >
-                {post.data.description}
-              </p>
-              {post.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-2 mt-3">
-                  {post.data.tags.map((tag) => (
-                    <span
-                      class="text-xs px-2 py-0.5 rounded border border-[var(--border)] text-[var(--muted)]"
-                      style="font-family: var(--font-mono);"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </a>
-          </article>
-        ))}
+    <div class="grid-max">
+      <!-- Page header -->
+      <div class="mb-16">
+        <div class="reveal-up">
+          <span class="heading-section accent-line">Blog</span>
+        </div>
+        <h1 class="reveal-up reveal-delay-1 heading-xl mt-4">
+          Writing
+        </h1>
+        <p class="reveal-up reveal-delay-2 text-[var(--muted)] mt-4 max-w-lg">
+          Thoughts on backend development, API design, and tooling.
+        </p>
       </div>
 
       {posts.length === 0 && (
         <p class="text-[var(--muted)] text-center py-12">No posts yet. Check back soon.</p>
+      )}
+
+      {featured && (
+        <!-- Featured post -->
+        <a
+          href={`/blog/${featured.id}`}
+          class="reveal-up reveal-delay-2 card-brutal p-8 md:p-10 block group mb-12"
+        >
+          <time
+            class="font-mono text-xs text-[var(--muted)]"
+            datetime={featured.data.pubDate.toISOString()}
+          >
+            {formatDate(featured.data.pubDate)}
+          </time>
+          <h2 class="heading-lg mt-3 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+            {featured.data.title}
+          </h2>
+          <p class="text-lg text-[var(--muted)] mt-3 leading-relaxed max-w-2xl">
+            {featured.data.description}
+          </p>
+          {featured.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-4">
+              {featured.data.tags.map((tag) => (
+                <span class="text-xs px-2 py-0.5 border border-[var(--border)] text-[var(--muted)] font-mono">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </a>
+      )}
+
+      {rest.length > 0 && (
+        <!-- Remaining posts in 2-column grid -->
+        <div class="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
+          <div class="divide-y divide-[var(--border)]">
+            {rest.filter((_, i) => i % 2 === 0).map((post, index) => (
+              <a
+                href={`/blog/${post.id}`}
+                class={`reveal-up reveal-delay-${Math.min(index + 3, 5)} group block py-6 md:pr-8`}
+              >
+                <time
+                  class="font-mono text-xs text-[var(--muted)]"
+                  datetime={post.data.pubDate.toISOString()}
+                >
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
+                  {post.data.description}
+                </p>
+              </a>
+            ))}
+          </div>
+          <div class="divide-y divide-[var(--border)]">
+            {rest.filter((_, i) => i % 2 === 1).map((post, index) => (
+              <a
+                href={`/blog/${post.id}`}
+                class={`reveal-up reveal-delay-${Math.min(index + 3, 5)} group block py-6 md:pl-8`}
+              >
+                <time
+                  class="font-mono text-xs text-[var(--muted)]"
+                  datetime={post.data.pubDate.toISOString()}
+                >
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
+                  {post.data.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   </section>
