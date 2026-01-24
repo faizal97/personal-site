@@ -111,7 +111,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Scroll reveal observer -->
     <script>
       function initReveal() {
-        const reveals = document.querySelectorAll('.reveal');
+        const reveals = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
