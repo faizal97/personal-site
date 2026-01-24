@@ -27,62 +27,59 @@ const experiences = [
 ];
 ---
 
-<section id="experience" class="section-padding">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2
-      class="reveal text-3xl md:text-4xl font-700 mb-12"
-      style="font-family: var(--font-display);"
-    >
-      Experience<span class="text-[var(--color-accent)]">.</span>
-    </h2>
+<section id="experience" class="section-padding relative overflow-hidden">
+  <!-- Background texture -->
+  <div class="absolute inset-0 grid-lines opacity-30 pointer-events-none"></div>
 
-    <div class="max-w-3xl space-y-6">
-      {experiences.map((exp, index) => (
-        <div
-          class={`reveal reveal-delay-${index + 1} card-base rounded-lg p-6 md:p-8`}
-        >
-          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
-            <div>
-              <h3
-                class="text-xl font-700"
-                style="font-family: var(--font-display);"
-              >
+  <div class="grid-max relative z-10">
+    <!-- Section header -->
+    <div class="mb-16">
+      <div class="reveal-up">
+        <span class="heading-section accent-line">Experience</span>
+      </div>
+      <h2 class="reveal-up reveal-delay-1 heading-lg mt-4">
+        Where I've worked
+      </h2>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative max-w-4xl mx-auto">
+      <!-- Vertical connecting line -->
+      <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-[var(--border)] -translate-x-1/2"></div>
+
+      {experiences.map((exp, index) => {
+        const isLeft = index % 2 === 0;
+        const revealClass = isLeft ? 'reveal-left' : 'reveal-right';
+        return (
+          <div class={`relative mb-16 last:mb-0 ${revealClass} reveal-delay-${index + 1}`}>
+            <!-- Timeline dot -->
+            <div class="absolute left-4 md:left-1/2 top-2 w-3 h-3 -translate-x-1/2 border-2 border-[var(--color-accent)] bg-[var(--bg)] rounded-full z-10"></div>
+
+            <!-- Content -->
+            <div class={`pl-12 md:pl-0 ${isLeft ? 'md:pr-[calc(50%+2rem)] md:text-right' : 'md:pl-[calc(50%+2rem)]'}`}>
+              <div class="font-mono text-xs text-[var(--muted)] uppercase tracking-widest mb-2">
+                {exp.period}
+              </div>
+              <h3 class="font-display text-xl font-bold mb-1">
                 {exp.title}
               </h3>
-              <p
-                class="text-sm text-[var(--color-accent)]"
-                style="font-family: var(--font-mono);"
-              >
+              <p class="font-mono text-sm text-[var(--color-accent)] mb-3">
                 {exp.company}
               </p>
+              <p class="text-[var(--muted)] leading-relaxed mb-4">
+                {exp.description}
+              </p>
+              <div class={`flex flex-wrap gap-2 ${isLeft ? 'md:justify-end' : ''}`}>
+                {exp.technologies.map((tech) => (
+                  <span class="text-xs px-2 py-1 border border-[var(--border)] text-[var(--muted)] font-mono">
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-            <span
-              class="text-xs text-[var(--muted)] whitespace-nowrap"
-              style="font-family: var(--font-mono);"
-            >
-              {exp.period}
-            </span>
           </div>
-
-          <p
-            class="text-[var(--muted)] mb-4 leading-relaxed"
-            style="font-family: var(--font-body);"
-          >
-            {exp.description}
-          </p>
-
-          <div class="flex flex-wrap gap-2">
-            {exp.technologies.map((tech) => (
-              <span
-                class="text-xs px-2 py-1 rounded border border-[var(--border)] text-[var(--muted)]"
-                style="font-family: var(--font-mono);"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
