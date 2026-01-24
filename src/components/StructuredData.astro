@@ -40,16 +40,18 @@ const websiteSchema = {
   author: { '@type': 'Person', name: 'Faizal Ardian Putra' },
 };
 
-const articleSchema = pubDate ? {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  description,
-  author: { '@type': 'Person', name: 'Faizal Ardian Putra' },
-  datePublished: pubDate.toISOString(),
-  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
-  ...(image && { image }),
-} : null;
+const articleSchema = pubDate
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      author: { '@type': 'Person', name: 'Faizal Ardian Putra' },
+      datePublished: pubDate.toISOString(),
+      ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+      ...(image && { image }),
+    }
+  : null;
 ---
 
 {type === 'website' && (
