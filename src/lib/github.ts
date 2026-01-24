@@ -8,10 +8,12 @@ export interface GitHubRepo {
   topics: string[];
 }
 
-export async function fetchGitHubRepos(username = 'faizal97'): Promise<GitHubRepo[]> {
+export async function fetchGitHubRepos(
+  username = 'faizal97',
+): Promise<GitHubRepo[]> {
   const response = await fetch(
     `https://api.github.com/users/${username}/repos?per_page=100&sort=stargazers_count&direction=desc`,
-    { headers: { Accept: 'application/vnd.github.v3+json' } }
+    { headers: { Accept: 'application/vnd.github.v3+json' } },
   );
 
   if (!response.ok) {

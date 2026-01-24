@@ -1,0 +1,17 @@
+# Lychee link checker configuration
+# https://lychee.cli.rs/usage/config/
+
+# Skip mailto, tel, and own-site links (internal links are checked via local files)
+exclude = ['^mailto:', '^tel:', 'faizal97\.github\.io', 'linkedin\.com']
+
+# Don't check fragments (anchors) - common false positives in static builds
+include_fragments = false
+
+# Accept common non-error status codes
+accept = [200, 204, 301, 302, 403, 429]
+
+# Timeout per request
+timeout = 10
+
+# Max concurrent requests
+max_concurrency = 16

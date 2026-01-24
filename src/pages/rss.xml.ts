@@ -1,5 +1,5 @@
-import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
@@ -9,8 +9,9 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Faizal Ardian Putra — Blog',
-    description: 'Thoughts on backend development, API design, and software engineering.',
-    site: context.site!,
+    description:
+      'Thoughts on backend development, API design, and software engineering.',
+    site: context.site ?? new URL('https://faizal97.github.io'),
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
