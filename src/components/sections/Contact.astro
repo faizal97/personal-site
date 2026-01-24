@@ -1,0 +1,82 @@
+---
+---
+
+<div id="contact" class="space-y-8">
+  <div>
+    <div class="reveal-up">
+      <span class="heading-section accent-line">Contact</span>
+    </div>
+    <h2 class="reveal-up reveal-delay-1 heading-lg mt-4">
+      Get in touch
+    </h2>
+    <p class="reveal-up reveal-delay-2 text-[var(--muted)] mt-3">
+      Have a project in mind or want to discuss an opportunity? Drop me a message.
+    </p>
+  </div>
+
+  <form class="reveal-up reveal-delay-3 space-y-6" id="contact-form">
+    <div>
+      <label for="name" class="block font-mono text-xs text-[var(--muted)] uppercase tracking-widest mb-2">
+        Name
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        class="w-full py-3 bg-transparent border-b-2 border-[var(--border)] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors duration-200"
+        placeholder="Your name"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="block font-mono text-xs text-[var(--muted)] uppercase tracking-widest mb-2">
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full py-3 bg-transparent border-b-2 border-[var(--border)] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors duration-200"
+        placeholder="you@example.com"
+      />
+    </div>
+
+    <div>
+      <label for="message" class="block font-mono text-xs text-[var(--muted)] uppercase tracking-widest mb-2">
+        Message
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        required
+        class="w-full py-3 bg-transparent border-b-2 border-[var(--border)] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors duration-200 resize-none"
+        placeholder="Tell me about your project..."
+      ></textarea>
+    </div>
+
+    <button type="submit" class="btn-primary">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Send Message
+    </button>
+  </form>
+</div>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const body = `Name: ${formData.get('name')}\nEmail: ${formData.get('email')}\n\n${formData.get('message')}`;
+      window.location.href = `mailto:faizalardianputra@yahoo.co.id?subject=Contact from Portfolio&body=${encodeURIComponent(body)}`;
+    });
+  }
+
+  initContactForm();
+  document.addEventListener('astro:after-swap', initContactForm);
+</script>

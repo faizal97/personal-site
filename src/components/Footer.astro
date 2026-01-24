@@ -1,0 +1,77 @@
+---
+const currentYear = new Date().getFullYear();
+
+const navLinks = [
+  { label: 'About', href: '/#about' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Blog', href: '/blog' },
+];
+
+const socialLinks = [
+  { label: 'GitHub', href: 'https://github.com/faizal97', external: true },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/faizalardian', external: true },
+  { label: 'Email', href: 'mailto:faizalardianputra@yahoo.co.id', external: false },
+];
+---
+
+<footer class="border-t border-[var(--border)] relative overflow-hidden">
+  <div class="absolute inset-0 dot-grid opacity-20 pointer-events-none"></div>
+
+  <div class="grid-max relative z-10 py-16">
+    <h2 class="heading-lg mb-12">
+      Let's build something<br/><span class="gradient-text">great</span>.
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <div>
+        <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Navigate</div>
+        <div class="space-y-2">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="block text-sm text-[var(--text)] hover:text-[var(--color-accent)] transition-colors duration-200"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Connect</div>
+        <div class="space-y-2">
+          {socialLinks.map((link) => (
+            <a
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+              class="block text-sm text-[var(--text)] hover:text-[var(--color-accent)] transition-colors duration-200"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Colophon</div>
+        <p class="text-sm text-[var(--muted)] leading-relaxed">
+          Built with Astro, Tailwind CSS, and deployed on Cloudflare Pages. Set in Syne, Outfit, and JetBrains Mono.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between pt-8 border-t border-[var(--border)]">
+      <p class="font-mono text-xs text-[var(--muted)]">
+        &copy; {currentYear} Faizal Ardian Putra
+      </p>
+      <a
+        href="#"
+        class="font-mono text-xs text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200"
+      >
+        Back to top ↑
+      </a>
+    </div>
+  </div>
+</footer>

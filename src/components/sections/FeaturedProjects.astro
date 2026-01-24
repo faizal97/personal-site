@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="projects" class="section-padding overflow-hidden">
+  <div class="grid-max mb-10">
+    <div class="flex items-end justify-between">
+      <div>
+        <div class="reveal-up">
+          <span class="heading-section accent-line">Projects</span>
+        </div>
+        <h2 class="reveal-up reveal-delay-1 heading-lg mt-4">
+          Selected work
+        </h2>
+      </div>
+      <a
+        href="/projects"
+        class="reveal-up reveal-delay-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200"
+      >
+        View all →
+      </a>
+    </div>
+  </div>
+
+  <div
+    class="reveal-up reveal-delay-2 scroll-x gap-6 pb-4"
+    style={`padding-left: max(var(--grid-gutter), calc((100vw - var(--grid-max)) / 2 + var(--grid-gutter)));`}
+  >
+    {projects.map((project) => (
+      <div class="w-[340px] md:w-[400px] shrink-0 card-brutal p-6 flex flex-col">
+        <div class="font-mono text-[0.625rem] text-[var(--muted)] mb-4">
+          // {project.data.status === 'confidential' ? 'Confidential' : 'Open Source'}
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2">
+          {project.data.title}
+        </h3>
+        <p class="font-mono text-xs text-[var(--color-accent)] mb-3">
+          {project.data.role} · {project.data.scale}
+        </p>
+        <p class="text-sm text-[var(--muted)] leading-relaxed mb-6 flex-1">
+          {project.data.description}
+        </p>
+        <div class="border-t border-[var(--border)] pt-4">
+          <div class="flex flex-wrap gap-2">
+            {project.data.technologies.map((tech) => (
+              <span class="text-xs px-2 py-1 border border-[var(--border)] text-[var(--muted)] font-mono">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        {project.data.liveUrl && (
+          <a
+            href={project.data.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 mt-4 font-mono text-xs text-[var(--color-accent)] hover:underline"
+          >
+            View Live ↗
+          </a>
+        )}
+      </div>
+    ))}
+    <div class="w-6 shrink-0"></div>
+  </div>
+</section>

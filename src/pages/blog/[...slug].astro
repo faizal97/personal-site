@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { formatDate } from '@lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} — Faizal Ardian Putra`}
+  description={post.data.description}
+  article={true}
+>
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-[3px] bg-[var(--color-accent)] z-[60] transition-[width] duration-100"
+    style="width: 0%;"
+  ></div>
+
+  <article class="pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <a
+        href="/blog"
+        class="reveal-up inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200 mb-8"
+      >
+        ← Back to blog
+      </a>
+
+      <header class="reveal-up reveal-delay-1 mb-12">
+        <time
+          class="font-mono text-xs text-[var(--muted)]"
+          datetime={post.data.pubDate.toISOString()}
+        >
+          {formatDate(post.data.pubDate)}
+          {post.data.updatedDate && (
+            <span> · Updated {formatDate(post.data.updatedDate)}</span>
+          )}
+        </time>
+        <h1 class="heading-xl mt-4 text-balance">
+          {post.data.title}
+        </h1>
+        <p class="text-lg text-[var(--muted)] mt-4">
+          {post.data.description}
+        </p>
+        {post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-4">
+            {post.data.tags.map((tag) => (
+              <span class="text-xs px-2 py-0.5 border border-[var(--border)] text-[var(--muted)] font-mono">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="reveal-up reveal-delay-2 prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  function initProgressBar() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  initProgressBar();
+  document.addEventListener('astro:after-swap', initProgressBar);
+</script>

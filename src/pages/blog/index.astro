@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '@lib/format';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [featured, ...rest] = posts;
+---
+
+<BaseLayout
+  title="Blog — Faizal Ardian Putra"
+  description="Thoughts on backend development, API design, and software engineering."
+>
+  <section class="pt-32 pb-20">
+    <div class="grid-max">
+      <div class="mb-16">
+        <div class="reveal-up">
+          <span class="heading-section accent-line">Blog</span>
+        </div>
+        <h1 class="reveal-up reveal-delay-1 heading-xl mt-4">
+          Writing
+        </h1>
+        <p class="reveal-up reveal-delay-2 text-[var(--muted)] mt-4 max-w-lg">
+          Thoughts on backend development, API design, and tooling.
+        </p>
+      </div>
+
+      {posts.length === 0 && (
+        <p class="text-[var(--muted)] text-center py-12">No posts yet. Check back soon.</p>
+      )}
+
+      {featured && (
+        <a
+          href={`/blog/${featured.id}`}
+          class="reveal-up reveal-delay-2 card-brutal p-8 md:p-10 block group mb-12"
+        >
+          <time
+            class="font-mono text-xs text-[var(--muted)]"
+            datetime={featured.data.pubDate.toISOString()}
+          >
+            {formatDate(featured.data.pubDate)}
+          </time>
+          <h2 class="heading-lg mt-3 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+            {featured.data.title}
+          </h2>
+          <p class="text-lg text-[var(--muted)] mt-3 leading-relaxed max-w-2xl">
+            {featured.data.description}
+          </p>
+          {featured.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-4">
+              {featured.data.tags.map((tag) => (
+                <span class="text-xs px-2 py-0.5 border border-[var(--border)] text-[var(--muted)] font-mono">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </a>
+      )}
+
+      {rest.length > 0 && (
+        <div class="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
+          {[0, 1].map((col) => (
+            <div class="divide-y divide-[var(--border)]">
+              {rest.filter((_, i) => i % 2 === col).map((post, index) => (
+                <a
+                  href={`/blog/${post.id}`}
+                  class:list={[
+                    'group block py-6',
+                    col === 0 ? 'md:pr-8' : 'md:pl-8',
+                    `reveal-up reveal-delay-${Math.min(index + 3, 5)}`,
+                  ]}
+                >
+                  <time
+                    class="font-mono text-xs text-[var(--muted)]"
+                    datetime={post.data.pubDate.toISOString()}
+                  >
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                  <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
+                    {post.data.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

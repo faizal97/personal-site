@@ -1,0 +1,65 @@
+---
+const primary = { name: 'Laravel', description: 'Primary framework for building scalable APIs and web applications' };
+const medium = [
+  { name: 'REST APIs', description: 'Design & implementation' },
+  { name: 'MySQL', description: 'Schema & optimization' },
+  { name: 'PHP', description: 'Core language' },
+];
+const small = [
+  'Database Design',
+  'Third-party APIs',
+  'Payment Systems',
+  'Data Migration',
+  'DevOps',
+  'Problem Solving',
+  'Team Leadership',
+  'Mentoring',
+];
+const tools = ['Git', 'Docker', 'Postman', 'Composer'];
+---
+
+<div id="skills" class="space-y-8">
+  <div class="reveal-right">
+    <span class="heading-section accent-line">Skills</span>
+  </div>
+
+  <div class="reveal-right reveal-delay-1 grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div class="col-span-2 row-span-2 card-outline p-6 flex flex-col justify-between">
+      <div>
+        <div class="text-2xl md:text-3xl font-bold font-display text-[var(--color-accent)]">
+          {primary.name}
+        </div>
+        <p class="text-sm text-[var(--muted)] mt-2">{primary.description}</p>
+      </div>
+      <div class="font-mono text-[0.625rem] uppercase tracking-widest text-[var(--muted)] mt-4">
+        Primary Framework
+      </div>
+    </div>
+
+    {medium.map((skill) => (
+      <div class="card-outline p-4 flex flex-col justify-between min-h-[100px]">
+        <div class="font-display font-bold text-sm">{skill.name}</div>
+        <div class="font-mono text-[0.625rem] text-[var(--muted)] mt-2">{skill.description}</div>
+      </div>
+    ))}
+
+    {small.map((skill) => (
+      <div class="card-outline p-3 flex items-center">
+        <span class="text-xs font-medium">{skill}</span>
+      </div>
+    ))}
+  </div>
+
+  <div class="reveal-right reveal-delay-2">
+    <div class="font-mono text-[0.625rem] uppercase tracking-widest text-[var(--muted)] mb-3">
+      Tools
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {tools.map((tool) => (
+        <span class="text-xs px-3 py-1 border border-[var(--border)] text-[var(--muted)] font-mono">
+          {tool}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
