@@ -1,0 +1,123 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navItems = [
+  { label: 'About', href: '/#about' },
+  { label: 'Skills', href: '/#skills' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/#contact' },
+];
+---
+
+<nav
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-[var(--border)]"
+  style="background-color: color-mix(in srgb, var(--bg) 85%, transparent);"
+>
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a
+      href="/"
+      class="font-display font-800 text-lg tracking-tight hover:text-[var(--color-accent)] transition-colors duration-200"
+      style="font-family: var(--font-display);"
+    >
+      FAP<span class="text-[var(--color-accent)]">.</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm font-medium text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200"
+          style="font-family: var(--font-body);"
+        >
+          {item.label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </div>
+
+    <!-- Mobile hamburger -->
+    <div class="flex items-center gap-3 md:hidden">
+      <ThemeToggle />
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Toggle menu"
+        class="w-10 h-10 flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+      >
+        <span class="hamburger-line block w-5 h-0.5 bg-current transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line block w-5 h-0.5 bg-current transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line block w-3.5 h-0.5 bg-current transition-all duration-300 origin-center ml-auto"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <div
+    id="mobile-menu"
+    class="md:hidden overflow-hidden transition-all duration-300 ease-out"
+    style="max-height: 0;"
+  >
+    <div class="px-6 py-6 space-y-4 border-t border-[var(--border)]">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link block text-lg font-medium text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200"
+          style="font-family: var(--font-display);"
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<style>
+  .menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(4px) rotate(45deg);
+  }
+  .menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .menu-open .hamburger-line:nth-child(3) {
+    width: 1.25rem;
+    transform: translateY(-4px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+
+    let isOpen = false;
+
+    btn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        btn.classList.add('menu-open');
+        menu.style.maxHeight = menu.scrollHeight + 'px';
+      } else {
+        btn.classList.remove('menu-open');
+        menu.style.maxHeight = '0';
+      }
+    });
+
+    // Close on link click
+    menu.querySelectorAll('.mobile-nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        isOpen = false;
+        btn.classList.remove('menu-open');
+        menu.style.maxHeight = '0';
+      });
+    });
+  }
+
+  initMobileMenu();
+  document.addEventListener('astro:after-swap', initMobileMenu);
+</script>

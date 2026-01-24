@@ -1,0 +1,64 @@
+---
+interface Props {
+  type: 'website' | 'article';
+  title?: string;
+  description?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  image?: string;
+}
+
+const {
+  type = 'website',
+  title = 'Faizal Ardian Putra — Backend Developer',
+  description = 'Backend Developer specializing in PHP, Laravel, REST APIs, and scalable web applications.',
+  pubDate,
+  updatedDate,
+  image,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() || 'https://faizal97.github.io';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Faizal Ardian Putra',
+  url: siteUrl,
+  jobTitle: 'Backend Developer',
+  sameAs: [
+    'https://github.com/faizal97',
+    'https://linkedin.com/in/faizalardian',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Faizal Ardian Putra',
+  url: siteUrl,
+  description,
+  author: { '@type': 'Person', name: 'Faizal Ardian Putra' },
+};
+
+const articleSchema = pubDate ? {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  author: { '@type': 'Person', name: 'Faizal Ardian Putra' },
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  ...(image && { image }),
+} : null;
+---
+
+{type === 'website' && (
+  <>
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  </>
+)}
+
+{type === 'article' && articleSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+)}

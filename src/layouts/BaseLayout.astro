@@ -1,0 +1,133 @@
+---
+import Navigation from '@components/Navigation.astro';
+import Footer from '@components/Footer.astro';
+import StructuredData from '@components/StructuredData.astro';
+import '@/styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+}
+
+const {
+  title = 'Faizal Ardian Putra — Backend Developer',
+  description = 'Backend Developer specializing in PHP, Laravel, REST APIs, and scalable web applications. 5+ years of experience building enterprise systems.',
+  image = '/profile_photo.webp',
+  article = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Preconnect to font CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Faizal Ardian Putra" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/rss.xml" />
+
+    <!-- View Transitions -->
+    <ViewTransitions />
+
+    <!-- Theme: prevent flash by reading localStorage before paint -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          // System preference
+          if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.documentElement.classList.remove('dark');
+          }
+        }
+      })();
+    </script>
+
+    <!-- Persist theme across View Transitions -->
+    <script is:inline>
+      document.addEventListener('astro:after-swap', function() {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      });
+    </script>
+
+    <StructuredData type="website" />
+  </head>
+  <body class="noise-bg min-h-screen flex flex-col relative z-10">
+    <Navigation />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Scroll reveal observer -->
+    <script>
+      function initReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+        reveals.forEach((el) => observer.observe(el));
+      }
+
+      initReveal();
+      document.addEventListener('astro:after-swap', initReveal);
+    </script>
+  </body>
+</html>
