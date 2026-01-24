@@ -11,10 +11,35 @@ import Contact from '@components/sections/Contact.astro';
 
 <BaseLayout>
   <Hero />
-  <About />
-  <Skills />
+
+  <!-- Compound grid: About + Skills side-by-side -->
+  <section class="section-padding border-t border-[var(--border)]">
+    <div class="grid-max">
+      <div class="grid lg:grid-cols-[2fr_1fr] gap-0">
+        <div class="lg:border-r border-[var(--border)] lg:pr-12">
+          <About />
+        </div>
+        <div class="lg:pl-12 mt-12 lg:mt-0">
+          <Skills />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <Experience />
   <FeaturedProjects />
-  <RecentPosts />
-  <Contact />
+
+  <!-- Compound grid: Recent Posts + Contact -->
+  <section class="section-padding border-t border-[var(--border)]">
+    <div class="grid-max">
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-0">
+        <div class="lg:pr-12">
+          <RecentPosts />
+        </div>
+        <div class="lg:pl-12 lg:border-l border-[var(--border)] mt-12 lg:mt-0">
+          <Contact />
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
