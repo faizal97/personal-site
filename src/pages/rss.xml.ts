@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
     title: 'Faizal Ardian Putra — Blog',
     description:
       'Thoughts on backend development, API design, and software engineering.',
-    site: context.site ?? new URL('https://faizal97.github.io'),
+    site: context.site ?? new URL('https://personal-site.fayz.workers.dev'),
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,

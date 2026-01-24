@@ -2,7 +2,7 @@
 # https://lychee.cli.rs/usage/config/
 
 # Skip mailto, tel, and own-site links (internal links are checked via local files)
-exclude = ['^mailto:', '^tel:', 'faizal97\.github\.io', 'linkedin\.com']
+exclude = ['^mailto:', '^tel:', 'personal-site\.fayz\.workers\.dev', 'linkedin\.com']
 
 # Don't check fragments (anchors) - common false positives in static builds
 include_fragments = false
