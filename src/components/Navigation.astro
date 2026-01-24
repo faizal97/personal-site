@@ -102,27 +102,30 @@ const navItems = [
     const closeBtn = document.getElementById('mobile-overlay-close');
     if (!btn || !overlay) return;
 
+    const menuBtn = btn;
+    const menuOverlay = overlay;
+
     function openMenu() {
-      overlay.classList.remove('opacity-0', 'pointer-events-none');
-      overlay.classList.add('opacity-100', 'pointer-events-auto');
-      btn.classList.add('menu-open');
+      menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      menuOverlay.classList.add('opacity-100', 'pointer-events-auto');
+      menuBtn.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-      overlay.classList.remove('opacity-100', 'pointer-events-auto');
-      btn.classList.remove('menu-open');
+      menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+      menuOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+      menuBtn.classList.remove('menu-open');
       document.body.style.overflow = '';
     }
 
-    btn.addEventListener('click', () => {
-      overlay.classList.contains('opacity-100') ? closeMenu() : openMenu();
+    menuBtn.addEventListener('click', () => {
+      menuOverlay.classList.contains('opacity-100') ? closeMenu() : openMenu();
     });
 
     closeBtn?.addEventListener('click', closeMenu);
 
-    overlay.querySelectorAll('.mobile-overlay-link').forEach((link) => {
+    menuOverlay.querySelectorAll('.mobile-overlay-link').forEach((link) => {
       link.addEventListener('click', closeMenu);
     });
   }

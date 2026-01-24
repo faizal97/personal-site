@@ -3,7 +3,7 @@ import Navigation from '@components/Navigation.astro';
 import Footer from '@components/Footer.astro';
 import StructuredData from '@components/StructuredData.astro';
 import '@/styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -62,7 +62,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/rss.xml" />
 
     <!-- View Transitions -->
-    <ViewTransitions />
+    <ClientRouter />
 
     <!-- Theme: prevent flash and persist across View Transitions -->
     <script is:inline>
