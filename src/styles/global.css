@@ -8,10 +8,8 @@
 
   /* ── Colors: Midnight Brutalist Editorial ── */
   --color-accent: #c8ff00;
-  --color-accent-dim: #a3cc00;
   --color-accent-glow: #c8ff0033;
   --color-violet: #8b5cf6;
-  --color-violet-dim: #7c3aed;
 
   /* Dark palette */
   --color-dark-bg: #0a0f1a;
@@ -31,16 +29,7 @@
 
   /* ── Layout ── */
   --grid-max: 1200px;
-  --grid-wide: 1400px;
   --grid-gutter: 1.5rem;
-
-  /* ── Z-index scale ── */
-  --z-base: 1;
-  --z-dropdown: 10;
-  --z-sticky: 20;
-  --z-overlay: 30;
-  --z-modal: 40;
-  --z-toast: 50;
 
   /* ── Spacing ── */
   --spacing-section: 120px;
@@ -49,14 +38,9 @@
   /* ── Motion ── */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 200ms;
-  --duration-medium: 400ms;
   --duration-normal: 300ms;
   --duration-slow: 600ms;
-
-  /* ── Breakpoints ── */
-  --breakpoint-xs: 480px;
 }
 
 /* ── Base Layer ── */
@@ -148,10 +132,6 @@
     font-family: var(--font-display);
   }
 
-  .font-body {
-    font-family: var(--font-body);
-  }
-
   .font-mono {
     font-family: var(--font-mono);
   }
@@ -159,12 +139,6 @@
   /* ── Layout utilities ── */
   .grid-max {
     max-width: var(--grid-max);
-    margin-inline: auto;
-    padding-inline: var(--grid-gutter);
-  }
-
-  .grid-wide {
-    max-width: var(--grid-wide);
     margin-inline: auto;
     padding-inline: var(--grid-gutter);
   }
@@ -204,8 +178,8 @@
   .card-brutal {
     background-color: var(--surface);
     border: 2px solid var(--border);
-    transition: transform var(--duration-medium) var(--ease-spring),
-                box-shadow var(--duration-medium) var(--ease-spring),
+    transition: transform var(--duration-normal) var(--ease-spring),
+                box-shadow var(--duration-normal) var(--ease-spring),
                 border-color var(--duration-fast);
   }
 
@@ -221,7 +195,7 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
     transition: border-color var(--duration-fast),
-                background var(--duration-medium);
+                background var(--duration-normal);
   }
 
   .card-glass:hover {
@@ -233,7 +207,7 @@
     background: transparent;
     border: 1px solid var(--border);
     transition: border-color var(--duration-fast),
-                background var(--duration-medium);
+                background var(--duration-normal);
   }
 
   .card-outline:hover {
@@ -340,16 +314,6 @@
   .reveal-delay-4 { transition-delay: 400ms; }
   .reveal-delay-5 { transition-delay: 500ms; }
 
-  /* ── Stagger children ── */
-  .stagger > *:nth-child(1) { transition-delay: 0ms; }
-  .stagger > *:nth-child(2) { transition-delay: 80ms; }
-  .stagger > *:nth-child(3) { transition-delay: 160ms; }
-  .stagger > *:nth-child(4) { transition-delay: 240ms; }
-  .stagger > *:nth-child(5) { transition-delay: 320ms; }
-  .stagger > *:nth-child(6) { transition-delay: 400ms; }
-  .stagger > *:nth-child(7) { transition-delay: 480ms; }
-  .stagger > *:nth-child(8) { transition-delay: 560ms; }
-
   /* ── Horizontal scroll container ── */
   .scroll-x {
     display: flex;
@@ -381,23 +345,26 @@
   }
 
   /* ── Button utilities ── */
-  .btn-primary {
+  .btn-primary,
+  .btn-ghost {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: var(--color-accent);
-    color: var(--color-dark-bg);
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border: 2px solid var(--color-accent);
-    transition: background var(--duration-fast),
-                transform var(--duration-medium) var(--ease-spring),
-                box-shadow var(--duration-medium) var(--ease-spring);
     cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-dark-bg);
+    border: 2px solid var(--color-accent);
+    transition: transform var(--duration-normal) var(--ease-spring),
+                box-shadow var(--duration-normal) var(--ease-spring);
   }
 
   .btn-primary:hover {
@@ -406,21 +373,11 @@
   }
 
   .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
     background: transparent;
     color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     border: 1px solid var(--border);
     transition: border-color var(--duration-fast),
                 color var(--duration-fast);
-    cursor: pointer;
   }
 
   .btn-ghost:hover {

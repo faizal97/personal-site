@@ -117,17 +117,10 @@ const navItems = [
     }
 
     btn.addEventListener('click', () => {
-      const isOpen = overlay.classList.contains('opacity-100');
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+      overlay.classList.contains('opacity-100') ? closeMenu() : openMenu();
     });
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeMenu);
-    }
+    closeBtn?.addEventListener('click', closeMenu);
 
     overlay.querySelectorAll('.mobile-overlay-link').forEach((link) => {
       link.addEventListener('click', closeMenu);

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import StructuredData from '@components/StructuredData.astro';
 import { getCollection, render } from 'astro:content';
+import { formatDate } from '@lib/format';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -15,14 +15,6 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 ---
 
 <BaseLayout
@@ -30,17 +22,6 @@ function formatDate(date: Date): string {
   description={post.data.description}
   article={true}
 >
-  <Fragment slot="head">
-    <StructuredData
-      type="article"
-      title={post.data.title}
-      description={post.data.description}
-      pubDate={post.data.pubDate}
-      updatedDate={post.data.updatedDate}
-    />
-  </Fragment>
-
-  <!-- Reading progress bar -->
   <div
     id="reading-progress"
     class="fixed top-0 left-0 h-[3px] bg-[var(--color-accent)] z-[60] transition-[width] duration-100"
@@ -49,7 +30,6 @@ function formatDate(date: Date): string {
 
   <article class="pt-32 pb-20">
     <div class="max-w-3xl mx-auto px-6">
-      <!-- Back link -->
       <a
         href="/blog"
         class="reveal-up inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--color-accent)] transition-colors duration-200 mb-8"
@@ -57,7 +37,6 @@ function formatDate(date: Date): string {
         ← Back to blog
       </a>
 
-      <!-- Header -->
       <header class="reveal-up reveal-delay-1 mb-12">
         <time
           class="font-mono text-xs text-[var(--muted)]"
@@ -85,7 +64,6 @@ function formatDate(date: Date): string {
         )}
       </header>
 
-      <!-- Content -->
       <div class="reveal-up reveal-delay-2 prose">
         <Content />
       </div>

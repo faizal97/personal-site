@@ -1,20 +1,13 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { formatDate } from '@lib/format';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const [featured, ...rest] = posts;
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 ---
 
 <BaseLayout
@@ -23,7 +16,6 @@ function formatDate(date: Date): string {
 >
   <section class="pt-32 pb-20">
     <div class="grid-max">
-      <!-- Page header -->
       <div class="mb-16">
         <div class="reveal-up">
           <span class="heading-section accent-line">Blog</span>
@@ -41,7 +33,6 @@ function formatDate(date: Date): string {
       )}
 
       {featured && (
-        <!-- Featured post -->
         <a
           href={`/blog/${featured.id}`}
           class="reveal-up reveal-delay-2 card-brutal p-8 md:p-10 block group mb-12"
@@ -71,50 +62,34 @@ function formatDate(date: Date): string {
       )}
 
       {rest.length > 0 && (
-        <!-- Remaining posts in 2-column grid -->
         <div class="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
-          <div class="divide-y divide-[var(--border)]">
-            {rest.filter((_, i) => i % 2 === 0).map((post, index) => (
-              <a
-                href={`/blog/${post.id}`}
-                class={`reveal-up reveal-delay-${Math.min(index + 3, 5)} group block py-6 md:pr-8`}
-              >
-                <time
-                  class="font-mono text-xs text-[var(--muted)]"
-                  datetime={post.data.pubDate.toISOString()}
+          {[0, 1].map((col) => (
+            <div class="divide-y divide-[var(--border)]">
+              {rest.filter((_, i) => i % 2 === col).map((post, index) => (
+                <a
+                  href={`/blog/${post.id}`}
+                  class:list={[
+                    'group block py-6',
+                    col === 0 ? 'md:pr-8' : 'md:pl-8',
+                    `reveal-up reveal-delay-${Math.min(index + 3, 5)}`,
+                  ]}
                 >
-                  {formatDate(post.data.pubDate)}
-                </time>
-                <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
-                  {post.data.title}
-                </h3>
-                <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
-                  {post.data.description}
-                </p>
-              </a>
-            ))}
-          </div>
-          <div class="divide-y divide-[var(--border)]">
-            {rest.filter((_, i) => i % 2 === 1).map((post, index) => (
-              <a
-                href={`/blog/${post.id}`}
-                class={`reveal-up reveal-delay-${Math.min(index + 3, 5)} group block py-6 md:pl-8`}
-              >
-                <time
-                  class="font-mono text-xs text-[var(--muted)]"
-                  datetime={post.data.pubDate.toISOString()}
-                >
-                  {formatDate(post.data.pubDate)}
-                </time>
-                <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
-                  {post.data.title}
-                </h3>
-                <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
-                  {post.data.description}
-                </p>
-              </a>
-            ))}
-          </div>
+                  <time
+                    class="font-mono text-xs text-[var(--muted)]"
+                    datetime={post.data.pubDate.toISOString()}
+                  >
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                  <h3 class="font-display text-lg font-bold mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-[var(--muted)] mt-1 line-clamp-2">
+                    {post.data.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+          ))}
         </div>
       )}
     </div>

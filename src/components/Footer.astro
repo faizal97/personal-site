@@ -9,25 +9,21 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/faizal97' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/faizalardian' },
-  { label: 'Email', href: 'mailto:faizalardianputra@yahoo.co.id' },
+  { label: 'GitHub', href: 'https://github.com/faizal97', external: true },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/faizalardian', external: true },
+  { label: 'Email', href: 'mailto:faizalardianputra@yahoo.co.id', external: false },
 ];
 ---
 
 <footer class="border-t border-[var(--border)] relative overflow-hidden">
-  <!-- Background texture -->
   <div class="absolute inset-0 dot-grid opacity-20 pointer-events-none"></div>
 
   <div class="grid-max relative z-10 py-16">
-    <!-- Sign-off heading -->
     <h2 class="heading-lg mb-12">
       Let's build something<br/><span class="gradient-text">great</span>.
     </h2>
 
-    <!-- 3-column grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-      <!-- Navigate -->
       <div>
         <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Navigate</div>
         <div class="space-y-2">
@@ -42,15 +38,14 @@ const socialLinks = [
         </div>
       </div>
 
-      <!-- Connect -->
       <div>
         <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Connect</div>
         <div class="space-y-2">
           {socialLinks.map((link) => (
             <a
               href={link.href}
-              target={link.label !== 'Email' ? '_blank' : undefined}
-              rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
               class="block text-sm text-[var(--text)] hover:text-[var(--color-accent)] transition-colors duration-200"
             >
               {link.label} ↗
@@ -59,7 +54,6 @@ const socialLinks = [
         </div>
       </div>
 
-      <!-- Colophon -->
       <div>
         <div class="font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-4">Colophon</div>
         <p class="text-sm text-[var(--muted)] leading-relaxed">
@@ -68,7 +62,6 @@ const socialLinks = [
       </div>
     </div>
 
-    <!-- Bottom row -->
     <div class="flex items-center justify-between pt-8 border-t border-[var(--border)]">
       <p class="font-mono text-xs text-[var(--muted)]">
         &copy; {currentYear} Faizal Ardian Putra
