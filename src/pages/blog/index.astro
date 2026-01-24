@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Blog — Faizal Ardian Putra"
+  description="Thoughts on backend development, API design, and software engineering."
+>
+  <section class="pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <h1
+        class="reveal text-4xl md:text-5xl font-700 mb-4"
+        style="font-family: var(--font-display);"
+      >
+        Blog<span class="text-[var(--color-accent)]">.</span>
+      </h1>
+      <p
+        class="reveal reveal-delay-1 text-[var(--muted)] mb-12"
+        style="font-family: var(--font-body);"
+      >
+        Thoughts on backend development, API design, and tooling.
+      </p>
+
+      <div class="space-y-8">
+        {posts.map((post, index) => (
+          <article class={`reveal reveal-delay-${Math.min(index + 1, 5)}`}>
+            <a
+              href={`/blog/${post.id}`}
+              class="group block"
+            >
+              <time
+                class="text-xs text-[var(--muted)]"
+                style="font-family: var(--font-mono);"
+                datetime={post.data.pubDate.toISOString()}
+              >
+                {formatDate(post.data.pubDate)}
+              </time>
+              <h2
+                class="text-xl md:text-2xl font-700 mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-200"
+                style="font-family: var(--font-display);"
+              >
+                {post.data.title}
+              </h2>
+              <p
+                class="text-[var(--muted)] mt-2 leading-relaxed"
+                style="font-family: var(--font-body);"
+              >
+                {post.data.description}
+              </p>
+              {post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mt-3">
+                  {post.data.tags.map((tag) => (
+                    <span
+                      class="text-xs px-2 py-0.5 rounded border border-[var(--border)] text-[var(--muted)]"
+                      style="font-family: var(--font-mono);"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </article>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <p class="text-[var(--muted)] text-center py-12">No posts yet. Check back soon.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
